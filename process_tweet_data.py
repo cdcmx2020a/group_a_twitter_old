@@ -11,6 +11,8 @@ from collections import defaultdict
 from datetime import datetime, timezone 
 from tqdm import tqdm 
 from joblib import Parallel, delayed
+from glob import glob 
+from itertools import chain
 
 
 START = datetime(2020, 1, 1, tzinfo=timezone.utc)
@@ -66,14 +68,13 @@ def get_country(p):
 
 def convert(in_file, out_file, blocksize):
     try:
-        logger.info(f'Reading from {in_file}')
         num_lines = sum(1 for line in open(in_file, 'r'))
         dfs = pd.read_json(in_file, lines=True, chunksize=blocksize)
         if blocksize is None:
             dfs = [dfs]
             blocksize = num_lines
 
-        pbar = tqdm(total=num_lines, desc=in_file)
+        pbar = tqdm(desc=in_file)
         for i, df in enumerate(dfs):
             # logger.info('full text')
             try:
@@ -129,6 +130,8 @@ def main():
     args = p.parse_args() 
 
     os.makedirs(args.o, exist_ok=True)
+
+    args.i = list(chain.from_iterable(glob(i) for i in args.i))
 
     fn_args = []
     for infile in args.i:
