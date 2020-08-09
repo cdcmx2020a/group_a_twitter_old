@@ -1,0 +1,12 @@
+twarc
+numpy
+tqdm
+pandas
+joblib
+geopandas
+matplotlib
+shapely
+descartes
+loguru
+pygooglenews
+unidecode

@@ -1,2 +1,4 @@
 processed_json/ filter=lfs diff=lfs merge=lfs -text
 gis/ filter=lfs diff=lfs merge=lfs -text
+gnews_raw filter=lfs diff=lfs merge=lfs -text
+gnews_raw_en filter=lfs diff=lfs merge=lfs -text
